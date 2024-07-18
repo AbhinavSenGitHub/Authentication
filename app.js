@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser")
 const connectDB = require('./config/db')
 const authRouters = require("./routes/auth")
 
+
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -15,11 +16,15 @@ app.use(express.urlencoded({ extended: true}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(session({
-    secret: "secret_key",
+    secret: 'your_secret_key',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true}
-}))
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // Set to true if using HTTPS
+        httpOnly: true, // Helps to prevent cross-site scripting (XSS) attacks
+        maxAge: 60 * 60 * 1000 // Session expiration time in milliseconds
+    }
+}));
 app.use("/auth", authRouters)
 
 
