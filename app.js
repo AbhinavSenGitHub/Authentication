@@ -25,6 +25,8 @@ app.use(session({
         maxAge: 60 * 60 * 1000 // Session expiration time in milliseconds
     }
 }));
+
+
 app.use("/auth", authRouters)
 
 
